@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Will You Be Mine?</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      background-color: #ffebf3;
+      color: #d6336c;
+      margin: 0;
+      padding: 0;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      overflow: hidden;
+      position: relative;
+    }
+    h1 {
+      font-size: 2.5rem;
+    }
+    button {
+      background-color: #d6336c;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      font-size: 1.2rem;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      position: absolute;
+    }
+    button:hover {
+      background-color: #c2255c;
+    }
+    #noButton {
+      position: absolute;
+    }
+    .full-screen {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 2rem;
+      color: white;
+      background-color: rgba(0, 0, 0, 0.9);
+      z-index: 1000;
+    }
+  </style>
+</head>
+<body>
+  <div>
+    <h1>Hey Yashika,</h1>
+    <p>Are you Mad </p>
+    <button onclick="handleYes()">Yes</button>
+    <button id="noButton" onmouseover="moveNoButton()" onclick="handleNo()">No</button>
+  </div>
+
+  <!-- Full-screen messages -->
+  <div id="yesMessage" class="full-screen" style="display: none;">
+    <p>Wow! Mujhe phele se hi pta tha </p>
+  </div>
+  <div id="noMessage" class="full-screen" style="display: none;">
+    <p id="noMessageText"></p>
+  </div>
+
+  <!-- Audio for sound effects -->
+  <audio id="yesSound" src="https://assets.mixkit.co/active_storage/sfx/3007/3007-preview.mp3"></audio>
+  <audio id="noSound" src="https://assets.mixkit.co/active_storage/sfx/2997/2997-preview.mp3"></audio>
+
+  <script>
+    let noClickCount = 0;
+    const noButton = document.getElementById('noButton');
+    const yesMessage = document.getElementById('yesMessage');
+    const noMessage = document.getElementById('noMessage');
+    const noMessageText = document.getElementById('noMessageText');
+    const yesSound = document.getElementById('yesSound');
+    const noSound = document.getElementById('noSound');
+
+    const messages = [
+      "Esa mat bol please 😢",
+      "Maan ja please 🥺 Tu Mad H ",
+      "Aww 😭",
+      "😏"
+    ];
+
+    // Handle "Yes" button click
+    function handleYes() {
+      yesMessage.style.display = 'flex';
+      yesSound.play();
+    }
+
+    // Handle "No" button click
+    function handleNo() {
+      if (noClickCount < messages.length) {
+        noMessageText.textContent = messages[noClickCount];
+        noMessage.style.display = 'flex';
+        noSound.play();
+        noClickCount++;
+      }
+      setTimeout(() => {
+        noMessage.style.display = 'none';
+      }, 2000); // Hide the message after 2 seconds
+    }
+
+    // Move the "No" button when the cursor gets close
+    function moveNoButton() {
+      const x = Math.random() * (window.innerWidth - noButton.offsetWidth);
+      const y = Math.random() * (window.innerHeight - noButton.offsetHeight);
+      noButton.style.left = `${x}px`;
+      noButton.style.top = `${y}px`;
+    }
+  </script>
+</body>
+</html>
